@@ -8,7 +8,7 @@ from datetime import datetime
 class SocialMediaRAG:
     def __init__(self, openai_api_key: str = None):
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
-        self.client = chromadb.PersistentClient(path="./chroma_db")
+        self.client = chromadb.Client()
         self.collection = self.client.get_or_create_collection("social_media_posts")
         
         if openai_api_key:
