@@ -28,12 +28,10 @@ class TrendDetector:
     
     def detect_trending_topics(self, posts: List[Dict]) -> List[Dict]:
         """Return top keywords by simple mention count in timeframe."""
-        # Filter recent posts
         recent = [p for p in posts if self._is_recent(p.get('created_at', datetime.now()))]
-        # Extract keywords
-        kw = self.extract_keywords(recent)
-        counts = Counter(kw)
-        # Build simple trending list
+        keywords = self.extract_keywords(recent)
+        counts = Counter(keywords)
+        
         trending = []
         for word, cnt in counts.most_common(10):
             if cnt >= self.min_mentions:
