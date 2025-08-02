@@ -10,7 +10,13 @@ class TrendDetector:
     def __init__(self, window_hours: int = 24, min_mentions: int = 10):
         self.window_hours = window_hours
         self.min_mentions = min_mentions
-        self.stopwords = set(nltk.corpus.stopwords.words('english'))
+        try:
+            self.stopwords = set(nltk.corpus.stopwords.words('english'))
+        except LookupError:
+            nltk.download('stopwords')
+            nltk.download('punkt')
+            self.stopwords = set(nltk.corpus.stopwords.words('english'))
+
     
     def extract_keywords(self, posts: List[Dict]) -> List[str]:
         """Extract relevant keywords and hashtags from posts"""
