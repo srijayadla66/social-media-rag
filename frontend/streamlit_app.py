@@ -8,11 +8,12 @@ import asyncio
 import sys
 import os
 
+
 # Add parent directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.models.rag_system import SocialMediaRAG
-from app.models.trend_detector import TrendDetector
+#from app.models.trend_detector import TrendDetector
 from data.ingestion.twitter_client import TwitterClient
 
 st.set_page_config(
@@ -24,8 +25,8 @@ st.set_page_config(
 # Initialize session state
 if 'rag_system' not in st.session_state:
     st.session_state.rag_system = SocialMediaRAG()
-if 'trend_detector' not in st.session_state:
-    st.session_state.trend_detector = TrendDetector()
+#if 'trend_detector' not in st.session_state:
+    #st.session_state.trend_detector = TrendDetector()
 if 'sample_data_loaded' not in st.session_state:
     st.session_state.sample_data_loaded = False
 
