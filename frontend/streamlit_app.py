@@ -8,13 +8,14 @@ import asyncio
 import sys
 import os
 
-
 # Add parent directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.models.rag_system import SocialMediaRAG
 #from app.models.trend_detector import TrendDetector
 from data.ingestion.twitter_client import TwitterClient
+from data.processing.content_filter import filter_profanity
+from data.processing.sentiment_analyzer import analyze_sentiment
 
 st.set_page_config(
     page_title="Social Media RAG & Trend Analysis",
@@ -53,9 +54,18 @@ def load_sample_data():
         },
         # Add more sample posts...
     ]
-    
+
+    # 1) Filter out posts containing blacklisted words
+    sample_posts = filter_profanity(sample_posts)
+
+    # 2) Analyze sentiment for each post
+    sample_posts = analyze_sentiment(sample_posts)
+
+    # 3) Add cleaned & annotated posts to the RAG system
     st.session_state.rag_system.add_posts(sample_posts)
+
     return sample_posts
+
 
 def main():
     st.title("🌐 Social Media RAG with Trend Analysis")
